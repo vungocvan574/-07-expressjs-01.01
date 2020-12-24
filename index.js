@@ -14,6 +14,9 @@ app.set('views', './views');
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
+//Use static file
+app.use(express.static('public'));
+
 //Use routes
 app.use('/users', userRoute);
 
