@@ -1,8 +1,12 @@
-h1 Create User
-form(action="/users/create", method="POST")
-    label Name
-    input(name="name", type="text")
-    //- label Phone
-    //- input(name="phone", type="text")
+extends ../layouts/common
 
-    button Create
+block content
+    h1 Create User
+    form.row.g-2(action="/users/create", method="POST")
+        .col-12
+            label.form-label Name
+            input.form-control(name="name", type="text")
+            //- label Phone
+            //- input(name="phone", type="text")
+        .col-12
+            button.btn.btn-primary Create
