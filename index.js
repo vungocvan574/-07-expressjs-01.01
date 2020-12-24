@@ -13,13 +13,26 @@ app.get('/', function(req, res) {
     });
 });
 
+var users = [
+    { id: 1, name: 'Van' },
+    { id: 2, name: 'Hoi' }
+]
+
 app.get('/users', function(req, res) {
     res.render('users/index', {
-        users: [
-            { id: 1, name: 'Van' },
-            { id: 2, name: 'Hoi' }
-        ]
-    })
+        users: users
+    });
+});
+
+app.get('/users/search', function(req, res) {
+    var q = req.query.q;
+    var matchedUsers = users.filter(function(user) {
+        return user.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
+    });
+
+    res.render('users/index', {
+        users: matchedUsers
+    });
 })
 
 app.listen(port, function() {
