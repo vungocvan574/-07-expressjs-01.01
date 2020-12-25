@@ -1,14 +1,25 @@
 extends ../layouts/common.pug
 
 block content
-    h1 Users
-    a(href="/users/create") Create User
-    form(action="/users/search", method="GET")
-        input(name="q", type="text")
-        button Search
-    ul
-        each user in users
-            li
-                span= user.name
-                span &nbsp;
-                a(href="/users/" + user.id) View
+    .container
+        h1 Users
+        a(href="/users/create") Create User
+        form.d-flex(action="/users/search", method="GET")
+            input.form-control(name="q", type="text")
+            button.btn.btn-primary.ms-2 Search
+        table.table
+            tr
+                th Name
+                th email
+                th Phone
+                th Action
+
+            each user in users
+                tr
+                    td= user.name
+                    td= user.email
+                    td= user.phone
+                    td
+                        .btn-group(role='group', aria-label='Basic checkbox toggle button group')
+                            a(href="/users/"+user.id).btn.btn-outline-secondary View
+                            a(href="#").btn.btn-outline-secondary Edit
