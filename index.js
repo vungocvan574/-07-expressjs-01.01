@@ -7,7 +7,11 @@ var port = 3000;
 var app = express();
 
 //Include routers
-var userRoute = require('./routes/user.route')
+var userRoute = require('./routes/user.route');
+var authRoute = require('./routes/auth.route');
+
+//Include middleware
+var authMiddleware = require('./middleware/auth.middleware');
 
 app.set('view engine', 'pug');
 app.set('views', './views');
@@ -20,7 +24,8 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 //Use routes
-app.use('/users', userRoute);
+app.use('/users', authMiddleware.requireAuth, userRoute);
+app.use('/auth', authRoute);
 
 app.get('/', function(req, res) {
     res.render('index', {
