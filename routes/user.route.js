@@ -3,6 +3,7 @@ var shortId = require('shortid');
 
 var db = require('../db');
 var controller = require('../controller/user.controller');
+var validate = require('../validate/user.validate');
 
 var router = express.Router();
 
@@ -14,6 +15,6 @@ router.get('/:id', controller.userDetail);
 
 router.get('/search', controller.search);
 
-router.post('/create', controller.postCreate);
+router.post('/create', validate.postCreate, controller.postCreate);
 
 module.exports = router;
