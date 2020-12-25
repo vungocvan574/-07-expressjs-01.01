@@ -1,4 +1,5 @@
 var express = require('express');
+var cookieParser = require('cookie-parser')
 
 db = require('./db');
 
@@ -13,6 +14,7 @@ app.set('views', './views');
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(cookieParser());
 
 //Use static file
 app.use(express.static('public'));
