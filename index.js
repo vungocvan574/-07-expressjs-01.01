@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var express = require('express');
 var cookieParser = require('cookie-parser')
 
@@ -18,7 +20,7 @@ app.set('views', './views');
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
-app.use(cookieParser('10100a'));
+app.use(cookieParser(process.env.SESSION_SECRET));
 
 //Use static file
 app.use(express.static('public'));
