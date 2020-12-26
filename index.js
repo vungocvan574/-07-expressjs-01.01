@@ -13,6 +13,7 @@ var userRoute = require('./routes/user.route');
 var productRoute = require('./routes/product.route');
 var authRoute = require('./routes/auth.route');
 var cartRoute = require('./routes/cart.route');
+var transferRoute = require('./routes/transfer.route');
 
 //Include middleware
 var authMiddleware = require('./middleware/auth.middleware');
@@ -33,6 +34,7 @@ app.use(express.static('public'));
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', authMiddleware.requireAuth, productRoute);
 app.use('/cart', cartRoute);
+app.use('/transfer', transferRoute);
 app.use('/auth', authRoute);
 
 app.get('/', function(req, res) {

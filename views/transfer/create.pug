@@ -1,0 +1,19 @@
+extends ../layouts/common
+
+block content
+    .container
+        h1 Create transfer
+
+        if errors
+            each error in errors
+                .alert.alert-danger=error
+
+        form.row.g-2(action="/transfer/create", method="POST")
+            .col-12
+                label.form-label(for="accountId") Name
+                input#accountId.form-control(name="accountId", type="text", value=values ? values.accountId : "")
+            .col-12
+                label.form-label(for="amount") Amount
+                input#amount.form-control(name="amount", type="number", value=values ? values.amount : "")
+            .col-12
+                button.btn.btn-primary Create
