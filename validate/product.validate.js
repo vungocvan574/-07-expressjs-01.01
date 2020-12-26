@@ -5,12 +5,12 @@ module.exports.postCreate = function(req, res) {
         errors.push('Name is required');
     };
 
-    if (!req.body.phone) {
-        errors.push('Phone is required');
+    if (!req.body.description) {
+        errors.push('Description is required');
     };
 
     if (errors.length) {
-        res.render('users/create', {
+        res.render('products/create', {
             errors: errors,
             values: req.body
         });

@@ -10,6 +10,7 @@ var app = express();
 
 //Include routers
 var userRoute = require('./routes/user.route');
+var productRoute = require('./routes/product.route');
 var authRoute = require('./routes/auth.route');
 
 //Include middleware
@@ -27,6 +28,7 @@ app.use(express.static('public'));
 
 //Use routes
 app.use('/users', authMiddleware.requireAuth, userRoute);
+app.use('/products', authMiddleware.requireAuth, productRoute);
 app.use('/auth', authRoute);
 
 app.get('/', function(req, res) {
