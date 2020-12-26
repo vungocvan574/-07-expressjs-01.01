@@ -1,7 +1,9 @@
 require('dotenv').config();
 
 var express = require('express');
-var cookieParser = require('cookie-parser')
+var cookieParser = require('cookie-parser');
+var csrf = require('csurf');
+// var bodyParser = require('body-parser');
 
 db = require('./db');
 
@@ -26,6 +28,7 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(sessionMiddleware);
+app.use(csrf({ cookie: true }));
 
 //Use static file
 app.use(express.static('public'));
