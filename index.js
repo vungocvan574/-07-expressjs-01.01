@@ -34,7 +34,7 @@ app.use(express.static('public'));
 app.use('/users', authMiddleware.requireAuth, userRoute);
 app.use('/products', authMiddleware.requireAuth, productRoute);
 app.use('/cart', cartRoute);
-app.use('/transfer', transferRoute);
+app.use('/transfer', authMiddleware.requireAuth, transferRoute);
 app.use('/auth', authRoute);
 
 app.get('/', function(req, res) {
