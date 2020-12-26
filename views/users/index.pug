@@ -3,12 +3,13 @@ extends ../layouts/common.pug
 block content
     .container
         h1 Users
-        a(href="/users/create") Create User
         form.d-flex(action="/users/search", method="GET")
+            a(href="/users/create").btn.btn-primary.me-2.w-25 Create User
             input.form-control(name="q", type="text")
             button.btn.btn-primary.ms-2 Search
         table.table
             tr
+                th Avatar
                 th Name
                 th email
                 th Phone
@@ -16,6 +17,8 @@ block content
 
             each user in users
                 tr
+                    td
+                        img(src= user.avatar, alt="", width='42')
                     td= user.name
                     td= user.email
                     td= user.phone

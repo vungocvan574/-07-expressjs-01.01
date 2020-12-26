@@ -8,12 +8,15 @@ block content
             each error in errors
                 .alert.alert-danger=error
 
-        form.row.g-2(action="/users/create", method="POST")
+        form.row.g-2(action="/users/create", method="POST" enctype="multipart/form-data")
             .col-12
                 label.form-label Name
                 input.form-control(name="name", type="text", value=values ? values.name : "")
             .col-12
                 label.form-label Phone
                 input.form-control(name="phone", type="text", , value=values ? values.phone : "")
+            .col-12
+                label.form-label(for="avatar") Avatar
+                input#avatar.form-control.form-control-file(name="avatar", type="file")
             .col-12
                 button.btn.btn-primary Create

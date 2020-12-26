@@ -1,3 +1,4 @@
+const md5 = require('md5');
 var shortId = require('shortid');
 var db = require('../db');
 
@@ -22,7 +23,7 @@ module.exports.userDetail = function(req, res) {
 
 module.exports.search = function(req, res) {
     var q = req.query.q;
-    var matchedUsers = db.get('users').filter(function(user) {
+    var matchedUsers = db.get('users').value().filter(function(user) {
         return user.name.toLowerCase().indexOf(q.toLowerCase()) !== -1;
     });
 
@@ -33,7 +34,10 @@ module.exports.search = function(req, res) {
 
 module.exports.postCreate = function(req, res) {
     req.body.id = shortId.generate();
+    req.body.email = "";
+    req.body.password = md5("123456");
+    req.body.avatar = req.file.path.split('\\').slice(1).join('/');
 
     db.get('users').push(req.body).write();
-    res.redirect('');
+    res.redirect('/users');
 };
