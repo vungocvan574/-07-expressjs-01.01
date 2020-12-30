@@ -9,7 +9,7 @@ block content
                 .alert.alert-danger=error
 
         form.row.g-2(action="/transfer/create", method="POST")
-            input(type="hidden", name="_csrf", value= csrfToken)
+            //- input(type="hidden", name="_csrf", value= csrfToken)
             .col-12
                 label.form-label(for="accountId") Name
                 input#accountId.form-control(name="accountId", type="text", value=values ? values.accountId : "")

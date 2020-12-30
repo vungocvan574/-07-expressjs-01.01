@@ -2,8 +2,11 @@ require('dotenv').config();
 
 var express = require('express');
 var cookieParser = require('cookie-parser');
-var csrf = require('csurf');
+// var csrf = require('csurf');
+var mongoose = require('mongoose');
 // var bodyParser = require('body-parser');
+
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 db = require('./db');
 
@@ -28,14 +31,16 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(sessionMiddleware);
-app.use(csrf({ cookie: true }));
+// app.use(csrf({ cookie: true }));
 
 //Use static file
 app.use(express.static('public'));
 
 //Use routes
 app.use('/users', authMiddleware.requireAuth, userRoute);
+// app.use('/users', userRoute);
 app.use('/products', authMiddleware.requireAuth, productRoute);
+// app.use('/products', productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
 app.use('/auth', authRoute);
