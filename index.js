@@ -14,11 +14,11 @@ var port = 3000;
 var app = express();
 
 //Include routers
-var userRoute = require('./routes/user.route');
-var productRoute = require('./routes/product.route');
-var authRoute = require('./routes/auth.route');
-var cartRoute = require('./routes/cart.route');
-var transferRoute = require('./routes/transfer.route');
+var userRoute = require('./route/user.route');
+var productRoute = require('./route/product.route');
+var authRoute = require('./route/auth.route');
+var cartRoute = require('./route/cart.route');
+var transferRoute = require('./route/transfer.route');
 
 //Include middleware
 var authMiddleware = require('./middleware/auth.middleware');
@@ -36,7 +36,7 @@ app.use(sessionMiddleware);
 //Use static file
 app.use(express.static('public'));
 
-//Use routes
+//Use route
 app.use('/users', authMiddleware.requireAuth, userRoute);
 // app.use('/users', userRoute);
 app.use('/products', authMiddleware.requireAuth, productRoute);
