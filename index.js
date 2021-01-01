@@ -4,7 +4,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 // var csrf = require('csurf');
 var mongoose = require('mongoose');
-// var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
@@ -29,14 +29,17 @@ var sessionMiddleware = require('./middleware/session.middleware');
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()) // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(sessionMiddleware);
 // app.use(csrf({ cookie: true }));
 
 //Use static file
 app.use(express.static('public'));
+
+//Use api
+app.use('/api/products', apiProductRoute);
 
 //Use route
 app.use('/users', authMiddleware.requireAuth, userRoute);
@@ -46,8 +49,6 @@ app.use('/products', authMiddleware.requireAuth, productRoute);
 app.use('/cart', cartRoute);
 app.use('/transfer', authMiddleware.requireAuth, transferRoute);
 app.use('/auth', authRoute);
-
-app.use('/api/products', apiProductRoute)
 
 app.get('/', function(req, res) {
     res.render('index', {
