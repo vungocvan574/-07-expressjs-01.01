@@ -6,7 +6,7 @@ var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 
-mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 db = require('./db');
 
