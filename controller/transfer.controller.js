@@ -1,11 +1,13 @@
 var db = require('../db');
-var shortId = require('shortId');
+var shortId = require("shortid");
 
 module.exports.create = function(req, res, next) {
-    res.render('transfer/create', {
-        csrfToken: req.csrfToken()
-    });
-    next();
+  // res.render('transfer/create', {
+  //     csrfToken: req.csrfToken()
+  // });
+
+  res.render("transfer/create");
+  next();
 };
 
 module.exports.postCreate = function(req, res, next) {
