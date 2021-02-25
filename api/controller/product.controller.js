@@ -4,24 +4,35 @@
 var Product = require('../../model/product.model');
 
 module.exports.index = async function (req, res, next) {
-  // var page = parseInt(req.query.page || 1); //n
+  // var page = parseInt(req.query.page || 1); // Cai nay nap tu UI
   // var perPage = 8;
 
   // // var begin = (page - 1) * perPage;
   // // var end = page * perPage;
 
-  // var drop = (page - 1) * perPage;
+  // var skip = (page - 1) * perPage;
   // res.render('products/index', {
   //     // products: db.get('products').value().slice(begin, end)
-  //     products: db.get('products').drop(drop).take(perPage).value()
+  //     products: db.get('products').drop(skip).take(perPage).value()
   // });
-  try {
-      var products = await Product.find();
-      Product.foo();
-      res.json(products);
-  } catch (error) {
-      next(error);
-  };
+
+    try {
+        var currentPage = req.query.p || 2;
+        const options = {
+            page: currentPage,
+            limit: 4,
+            collation: {
+              locale: 'en',
+            },
+          };
+        var products = await Product.paginate({}, options);
+
+        res.json(products)
+    } catch (error) {
+        next(error)
+    }
+
+  //
 };
 
 module.exports.create = async function(req, res, next) {
@@ -31,7 +42,7 @@ module.exports.create = async function(req, res, next) {
         
     } catch (error) {
         next(error);
-    };
+    }
 };
 
 // module.exports.productDetail = function (req, res) {

@@ -3,6 +3,14 @@ extends ../layouts/common
 block content
     .container
         h1 User Detail
-        p
-            b Name
-            span= user.name
+        table.table
+            tbody
+                tr
+                    th(scope='row') Name
+                    td=user.name
+                tr
+                    th(scope='row') email
+                    td=user.email
+                tr
+                    th(scope='row') phone
+                    td=user.phone

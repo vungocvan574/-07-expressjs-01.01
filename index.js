@@ -6,11 +6,15 @@ var cookieParser = require('cookie-parser');
 var mongoose = require('mongoose');
 var bodyParser = require("body-parser");
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true })
+        .then(db => console.log(db.connection.host))
+        .catch(err => console.error(err));
 
 db = require('./db');
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3300;
 var app = express();
 
 //Include routers
@@ -38,7 +42,7 @@ app.use(sessionMiddleware);
 //Use static file
 app.use(express.static('public'));
 
-//Use api
+//Use api route
 app.use('/api/products', apiProductRoute);
 
 //Use route
@@ -52,7 +56,7 @@ app.use('/auth', authRoute);
 
 app.get('/', function(req, res) {
     res.render('index', {
-        name: 'Ilya'
+        name: ''
     });
 });
 

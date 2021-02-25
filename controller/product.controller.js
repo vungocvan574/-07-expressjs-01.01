@@ -3,34 +3,74 @@
 
 var Product = require('../model/product.model');
 
-module.exports.index = async function(req, res) {
-    // var page = parseInt(req.query.page || 1); //n
+module.exports.index = async function(req, res, next) {
+    // Doan nay lam viec chua co server
+    // var pages = parseInt(req.query.page || 1); //n
     // var perPage = 8;
 
-    // // var begin = (page - 1) * perPage;
-    // // var end = page * perPage;
+    // // var firstIndex = (pages - 1) * perPage;
+    // // var lastIndex = pages * perPage;
 
-    // var drop = (page - 1) * perPage;
+    // var drop = (pages - 1) * perPage// bo qua trang 0
     // res.render('products/index', {
-    //     // products: db.get('products').value().slice(begin, end)
+    //     // products: db.get('products').value().slice(firstIndex, lastIndex)
     //     products: db.get('products').drop(drop).take(perPage).value()
     // });
-    var products = await Product.find();
-    res.render('products/index', {
-        products: products
-    });
+    //
+    
+    // try {
+    //     var page = parseInt(req.query.page) || 1;
+    //     const limit = 8;
+
+    //     var firstItem = (page - 1) * limit;
+    //     var lastItem = page * limit;
+    //     // var skip = (page - 1) * limit;
+
+    //     var allProducts = await Product.find();
+
+    //     var products = allProducts.slice(firstItem, lastItem);
+        
+    //     res.render('products/index', {
+    //         products: products,
+    //         current: page,
+    //         pages: Math.ceil(allProducts.length / limit)
+    //     });
+    // } catch (error) {
+    //     next(error)
+    // }
+
+    try {
+        var currentPage = req.query.p || 1
+        const options = {
+            page: currentPage,
+            limit: 4,
+            collation: {
+              locale: 'en',
+            },
+          };
+        var products = await Product.paginate({}, options);
+
+        res.render('products/index', {
+            products: products,
+        });
+    } catch (error) {
+        next(error)
+    }
+
 };
+
+
 
 module.exports.create = function(req, res) {
     res.render('products/create')
 };
 
-module.exports.userDetail = function(req, res) {
+module.exports.productDetail = function(req, res) {
     var id = req.params.id;
-    var product = db.get('products').find({ id: id }).value();
+    var product = Product.find({ id: id }).value();
 
-    res.render('products/product-detail', {
-        product: product
+    res.render("products/product-detail", {
+        product: product,
     });
 };
 

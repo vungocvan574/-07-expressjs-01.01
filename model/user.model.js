@@ -2,8 +2,9 @@ var mongoose = require("mongoose");
 
 var userSchema = new mongoose.Schema({
   name: String,
-  image: String,
-  description: String,
+  password: String,
+  email: String,
+  phone: String
 });
 
 var User = mongoose.model("User", userSchema, "users");

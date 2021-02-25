@@ -9,12 +9,68 @@ block content
             form.d-flex.ms-auto(action="/products/search", method="GET")
                 input(type="text", name="q", class="form-control")
                 button(class="btn btn-primary ms-1") Search
+        
+        //- Cho phan trang
+        - var pageIndex = 1;
+        - var currentPage = products.page;
+        - var totalPages = products.totalPages;
+        - var prevPage = products.prevPage;
+        - var nextPage = products.nextPage;
+        - var hasPrevPage = products.hasPrevPage;
+        - var hasNextPage = products.hasNextPage;
 
+        if(totalPages>0)
+            nav(aria-label='...')
+                ul.pagination
+                    //- First Item
+                    unless(hasPrevPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8666;
+                    else
+                        li.page-item
+                            a.page-link(href='/products') &#8666;
+                    
+                    //- Prev Item
+                    unless(hasPrevPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8592;
+                    else
+                        li.page-item
+                            a.page-link(href='/products?p='+prevPage) &#8592;
+                    
+                    //- Current Item
+                    while pageIndex <= totalPages
+                        if(pageIndex == currentPage)
+                            li.page-item.active(aria-current='page')
+                                a.page-link=pageIndex++
+                        else
+                            li.page-item
+                                a.page-link(href="/products?p=" + pageIndex)=pageIndex++
+
+
+                    
+                    //- Next Item
+                    unless(hasNextPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8594;
+                    else
+                        li.page-item
+                            a.page-link(href="/products?p=" + nextPage) &#8594;
+                    
+                    //- Last item
+                    unless(hasNextPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8667;
+                    else
+                        li.page-item
+                            a.page-link(href="/products?p=" + totalPages) &#8667;
+        
         //- foreach product
         .album.py-5.bg-light
             .container
                 .row.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-lg-4.g-3
-                    each product in products
+                
+                    each product in products.docs
                         .col
                             .card.shadow-sm
                                 img(src= product.image, alt="img")
@@ -27,3 +83,56 @@ block content
                                             a.btn.btn-sm.btn-outline-secondary(type='button') View
                                             a.btn.btn-sm.btn-primary(href="/cart/add/" + product.id, type="button") Add to cart
                                             //- a.btn.btn-sm.btn-primary(href="#", type="button") Add to cart
+        
+        - var pageIndex = 1;
+        - var currentPage = products.page;
+        - var totalPages = products.totalPages;
+        - var prevPage = products.prevPage;
+        - var nextPage = products.nextPage;
+        - var hasPrevPage = products.hasPrevPage;
+        - var hasNextPage = products.hasNextPage;
+        if(totalPages>0)
+            nav(aria-label='...')
+                ul.pagination
+                    //- First Item
+                    unless(hasPrevPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8666;
+                    else
+                        li.page-item
+                            a.page-link(href='/products') &#8666;
+                    
+                    //- Prev Item
+                    unless(hasPrevPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8592;
+                    else
+                        li.page-item
+                            a.page-link(href='/products?p='+prevPage) &#8592;
+                    
+                    //- Current Item
+                    while pageIndex <= totalPages
+                        if(pageIndex == currentPage)
+                            li.page-item.active(aria-current='page')
+                                a.page-link=pageIndex++
+                        else
+                            li.page-item
+                                a.page-link(href="/products?p=" + pageIndex)=pageIndex++
+
+
+                    
+                    //- Next Item
+                    unless(hasNextPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8594;
+                    else
+                        li.page-item
+                            a.page-link(href="/products?p=" + nextPage) &#8594;
+                    
+                    //- Last item
+                    unless(hasNextPage)
+                        li.page-item.disabled
+                            a.page-link(href='#', tabindex='-1', aria-disabled='true') &#8667;
+                    else
+                        li.page-item
+                            a.page-link(href="/products?p=" + totalPages) &#8667;
